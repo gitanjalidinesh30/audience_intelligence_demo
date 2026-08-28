@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audience Intelligence — Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===================== TOP BAR WITH INLINE NAV ===================== -->
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">AI</div>
+    <div class="brand-text">
+      <div class="brand-title">Audience Intelligence</div>
+      <div class="brand-sub">Prototype demo · synthetic data</div>
+    </div>
+  </div>
+
+  <nav class="topnav">
+    <button class="nav-item active" data-view="inventory">
+      <span class="nav-num">01</span>
+      <span class="nav-label">Segment Inventory Audit</span>
+    </button>
+    <button class="nav-item" data-view="performance">
+      <span class="nav-num">02</span>
+      <span class="nav-label">Performance &amp; Behaviour</span>
+    </button>
+    <button class="nav-item" data-view="category">
+      <span class="nav-num">03</span>
+      <span class="nav-label">Category Affinity</span>
+    </button>
+    <span class="topnav-divider"></span>
+    <button class="nav-item" data-view="targeting">
+      <span class="nav-num">04</span>
+      <span class="nav-label">Target Groups &amp; Next Actions</span>
+    </button>
+  </nav>
+
+  <div class="topbar-spacer"></div>
+  <span class="topbar-tag">GIVES YOU WIIINGS</span>
+</header>
+
+<div class="app-shell">
+  <main class="content">
+
+    <!-- ===================== VIEW 1: INVENTORY AUDIT ===================== -->
+    <section class="view" id="view-inventory">
+      <header class="view-header">
+        <h1>Segment Inventory Audit</h1>
+        <p class="view-intro">
+          The same audience often gets a different name on every platform — "Fitness Enthusiasts" on one,
+          "Fitness Freaks" on another. This view groups those look-alike segments back together, so you can see
+          how many differently-named versions of the same audience you're effectively paying for.
+        </p>
+      </header>
+      <div id="inv-portfolio"></div>
+
+      <div class="controls" style="margin-top:8px;">
+        <label>View each audience's platform mix as:</label>
+        <div class="seg-control" id="inv-view-toggle">
+          <button class="seg-btn active" data-mode="compact">Compact</button>
+          <button class="seg-btn" data-mode="donut">Spend donut</button>
+          <button class="seg-btn" data-mode="radar">Platform radar</button>
+        </div>
+      </div>
+      <div id="inventory-list" class="stack"></div>
+    </section>
+
+    <!-- ===================== VIEW 2: PERFORMANCE & BEHAVIOUR (merged) ===================== -->
+    <section class="view hidden" id="view-performance">
+      <header class="view-header">
+        <h1>Performance &amp; Behaviour</h1>
+        <p class="view-intro">
+          Two questions, told as one story. First: how does each audience actually perform, platform by platform?
+          Then: when two platforms both matched a segment under the same canonical name, did they match audiences
+          that actually <em>behave</em> alike — or just audiences that happen to share a label?
+        </p>
+      </header>
+
+      <h2 class="section-heading" style="margin-top:0;">Part 1 — How each audience performs</h2>
+      <p class="section-sub" id="heatmap-caption">
+        100 means an audience performs exactly like that platform's own average — above 100 means it outperforms,
+        below means it underperforms. Because platforms measure things differently, every cell also carries a trust
+        grade (A/B/C) for how safe it is to compare that number against another platform's.
+      </p>
+      <div class="controls">
+        <label for="metric-select">Metric:</label>
+        <select id="metric-select">
+          <option value="CLICKS">Click-through rate</option>
+          <option value="CONVERSIONS">Conversion rate</option>
+          <option value="IMPRESSIONS">Reach (impressions)</option>
+        </select>
+        <div class="legend">
+          <span class="legend-item"><span class="grade-chip grade-A">A</span> Safe to compare directly</span>
+          <span class="legend-item"><span class="grade-chip grade-B">B</span> Compare direction only</span>
+          <span class="legend-item"><span class="grade-chip grade-C">C</span> Treat as a hint, not a fact</span>
+        </div>
+      </div>
+      <div id="heatmap-wrap" class="heatmap-wrap"></div>
+
+      <h2 class="section-heading">Part 2 — Does the name match the behaviour?</h2>
+      <p class="section-sub">
+        Matching segments by <em>name</em> is easy — two platforms both calling something "fitness" doesn't mean
+        they mean the same people. Below, every name-matched group is checked against how its members actually
+        click and convert. Groups that split across more than one behaviour pattern are listed first — those are
+        the ones worth a human review before you treat them as a single audience.
+      </p>
+      <div id="matching-list" class="stack"></div>
+    </section>
+
+    <!-- ===================== VIEW 3: CATEGORY AFFINITY ===================== -->
+    <section class="view hidden" id="view-category">
+      <header class="view-header">
+        <h1>Category Affinity</h1>
+        <p class="view-intro">
+          Two questions about CPG categories, kept apart because they rest on different evidence.
+          First: <em>who</em> over-buys energy drinks — audience by audience, indexed against each
+          platform's own average. Second: <em>what else</em> ends up in the basket alongside them.
+        </p>
+      </header>
+      <div id="category-body"></div>
+    </section>
+
+    <!-- ===================== VIEW 4: TARGET GROUPS & NEXT ACTIONS ===================== -->
+    <section class="view hidden" id="view-targeting">
+      <header class="view-header">
+        <h1>Target Groups &amp; Next Best Action</h1>
+        <p class="view-intro">
+          Everything the other screens found, combined into one call per audience: what to do
+          about it. Every number here traces back to a specific screen — hover the
+          <span class="info-dot" data-tip="Small dotted underlines like this one show a hover explanation everywhere on this screen.">ⓘ</span>
+          marks to see exactly what's behind each one.
+        </p>
+      </header>
+      <div id="targeting-body"></div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="page-footer">
+  <p>Every number in this tool was generated by a computer for demonstration purposes. No real advertiser, customer, or platform data is used anywhere here.</p>
+</footer>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
